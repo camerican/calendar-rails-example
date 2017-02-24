@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <%= "Welcome, #{User.find(session[:id]).name_first}" if session[:id] %>
   	<%= flash[:notice] if flash[:notice] %>
     <%= yield %>
   </body>

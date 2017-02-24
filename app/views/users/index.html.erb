@@ -1,3 +1,7 @@
+	<% if @current_user %>
+	<h3>Yeehah! Welcome, <%= @current_user.name_first %>!</h3>
+	<a href="/logout">Logout</a>
+	<% end %>
 	<h2>Our Users</h2>
 	<ul>
 	<% @users.each do |user| %>
