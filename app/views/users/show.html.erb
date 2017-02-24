@@ -1,0 +1,8 @@
+	<h2><%= @user.name_first + " " + @user.name_last %></h2>
+
+	<p>Your calendars</p>
+	<ul>
+	<% @user.calendars.each do |calendar| %>
+		<li><%= calendar.title %></li>
+	<% end %>
+	</ul>

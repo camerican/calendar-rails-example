@@ -1,0 +1,6 @@
+	<h2>Our Users</h2>
+	<ul>
+	<% @users.each do |user| %>
+	<li><%= link_to user.name_first + " " + user.name_last, "/users/#{user.id}" %></li>
+	<% end %>
+	</ul>
