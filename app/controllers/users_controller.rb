@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
+  
+  before_filter :current_user
+  before_filter :is_admin, only: [:index]
+
   def index
-    @current_user = session[:user_id] && User.find(session[:user_id])
+    
     @users = User.all
   end
   def show
@@ -9,11 +13,18 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
   end
+  def new
+    @user = User.new
+  end
   def create
-    # create user...
-    User.create(user_params)
-    flash[:notice] = "Congrats on your new account"
-    redirect_to users_path
+    @user = User.new(user_params)
+    if @user.save
+      flash[:notice] = "Congrats on your new account"
+      redirect_to users_path
+    else
+      flash[:notice] = "Ooops, we have a problem"
+      render :new
+    end
   end
   def update
     @user = User.find(params[:id])
@@ -25,10 +36,17 @@ class UsersController < ApplicationController
     redirect_to edit_user_path
   end
 
+  def is_admin
+    redirect_to '/' if !@current_user || !@current_user.admin
+  end
+
   private
+  def current_user
+    @current_user = session[:user_id] && User.find(session[:user_id])
+  end
 
   def user_params
-    params.require(:user).permit(:name_first,:name_last,:username,:email)
+    params.require(:user).permit(:name_first,:name_last,:username,:email,:password)
   end
 
 end
