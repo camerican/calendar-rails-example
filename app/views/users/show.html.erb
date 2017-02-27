@@ -6,3 +6,9 @@
 		<li><%= calendar.title %></li>
 	<% end %>
 	</ul>
+
+	<h2>Your events for your first calendar</h2>
+
+	<% @user.calendars.first.events.each do |event| %>
+		<%= output event %>
+	<% end %>
